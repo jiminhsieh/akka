@@ -86,7 +86,7 @@ object AkkaBuild {
       // compile options
       scalacOptions in Compile ++= Seq("-encoding", "UTF-8", "-target:jvm-1.8", "-feature", "-unchecked", "-Xlog-reflective-calls", "-Xlint",
         "-Ywarn-unused:locals", "-Ywarn-unused:privates",
-        "-Yrangepos", "-Xplugin-require:semanticdb", "-P:semanticdb:sourceroot:/x"),
+        "-Yrangepos", "-Xplugin-require:semanticdb"),
       scalacOptions in Compile ++= (if (allWarnings) Seq("-deprecation") else Nil),
       scalacOptions in Test := (scalacOptions in Test).value.filterNot(opt ⇒
         opt == "-Xlog-reflective-calls" || opt.contains("genjavadoc")),

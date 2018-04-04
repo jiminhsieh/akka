@@ -65,6 +65,11 @@ lazy val actor = akkaModule("akka-actor")
   )
   .settings(VersionGenerator.settings)
   .enablePlugins(BoilerplatePlugin)
+  .settings(
+    scalacOptions in Compile ++= Seq(
+      "-P:semanticdb:sourceroot:/Users/jimin/repository/github/akka/akka-actor"
+    )
+  )
 
 lazy val actorTests = akkaModule("akka-actor-tests")
   .dependsOn(testkit % "compile->compile;test->test")
