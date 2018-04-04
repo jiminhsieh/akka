@@ -76,7 +76,7 @@ class FlowBufferSpec extends StreamSpec {
       for (i ← 1 to 200) publisher.sendNext(i)
 
       // The next request would  be otherwise in race with the last onNext in the above loop
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
 
       // drain
       for (i ← 101 to 200) {
@@ -85,7 +85,7 @@ class FlowBufferSpec extends StreamSpec {
       }
 
       sub.request(1)
-      subscriber.expectNoMsg(1.seconds)
+      subscriber.expectNoMessage(1.seconds)
 
       publisher.sendNext(-1)
       sub.request(1)
@@ -105,7 +105,7 @@ class FlowBufferSpec extends StreamSpec {
       for (i ← 1 to 200) publisher.sendNext(i)
 
       // The next request would  be otherwise in race with the last onNext in the above loop
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
 
       // drain
       for (i ← 1 to 99) {
@@ -117,7 +117,7 @@ class FlowBufferSpec extends StreamSpec {
       subscriber.expectNext(200)
 
       sub.request(1)
-      subscriber.expectNoMsg(1.seconds)
+      subscriber.expectNoMessage(1.seconds)
 
       publisher.sendNext(-1)
       sub.request(1)
@@ -137,7 +137,7 @@ class FlowBufferSpec extends StreamSpec {
       for (i ← 1 to 150) publisher.sendNext(i)
 
       // The next request would  be otherwise in race with the last onNext in the above loop
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
 
       // drain
       for (i ← 101 to 150) {
@@ -146,7 +146,7 @@ class FlowBufferSpec extends StreamSpec {
       }
 
       sub.request(1)
-      subscriber.expectNoMsg(1.seconds)
+      subscriber.expectNoMessage(1.seconds)
 
       publisher.sendNext(-1)
       sub.request(1)
@@ -164,7 +164,7 @@ class FlowBufferSpec extends StreamSpec {
       for (i ← 1 to 150) publisher.sendNext(i)
 
       // The next request would  be otherwise in race with the last onNext in the above loop
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
 
       // drain
       for (i ← 1 to 100) {
@@ -172,7 +172,7 @@ class FlowBufferSpec extends StreamSpec {
       }
 
       subscriber.request(1)
-      subscriber.expectNoMsg(1.seconds)
+      subscriber.expectNoMessage(1.seconds)
 
       publisher.sendNext(-1)
       subscriber.requestNext(-1)
@@ -218,12 +218,12 @@ class FlowBufferSpec extends StreamSpec {
         for (i ← 1 to 200) publisher.sendNext(i)
 
         // The request below is in race otherwise with the onNext(200) above
-        subscriber.expectNoMsg(500.millis)
+        subscriber.expectNoMessage(500.millis)
         sub.request(1)
         subscriber.expectNext(200)
 
         sub.request(1)
-        subscriber.expectNoMsg(1.seconds)
+        subscriber.expectNoMessage(1.seconds)
 
         publisher.sendNext(-1)
         sub.request(1)

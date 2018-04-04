@@ -159,7 +159,7 @@ class DistributedPubSubRestartSpec extends MultiNodeSpec(DistributedPubSubRestar
           probe.expectMsgType[SubscribeAck]
 
           // let them gossip, but Delta should not be exchanged
-          probe.expectNoMsg(5.seconds)
+          probe.expectNoMessage(5.seconds)
           newMediator.tell(Internal.DeltaCount, probe.ref)
           probe.expectMsg(0L)
 

@@ -364,7 +364,7 @@ class ActorSystemSpec extends AkkaSpec(ActorSystemSpec.config) with ImplicitSend
 
         ref.tell("ping", probe.ref)
 
-        ecProbe.expectNoMsg(200.millis)
+        ecProbe.expectNoMessage(200.millis)
         probe.expectMsg(1.second, "ping")
       } finally {
         shutdown(system2)

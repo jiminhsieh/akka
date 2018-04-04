@@ -72,7 +72,7 @@ class FlowIdleInjectSpec extends StreamSpec {
       Source.fromPublisher(upstream).keepAlive(1.second, () ⇒ 0).runWith(Sink.fromSubscriber(downstream))
 
       downstream.ensureSubscription()
-      downstream.expectNoMsg(1.5.second)
+      downstream.expectNoMessage(1.5.second)
       downstream.request(1)
       downstream.expectNext(0)
 
@@ -89,7 +89,7 @@ class FlowIdleInjectSpec extends StreamSpec {
       downstream.request(10)
       downstream.expectNextN(1 to 10)
 
-      downstream.expectNoMsg(1.5.second)
+      downstream.expectNoMessage(1.5.second)
       downstream.request(1)
       downstream.expectNext(0)
 
@@ -104,9 +104,9 @@ class FlowIdleInjectSpec extends StreamSpec {
       Source.fromPublisher(upstream).keepAlive(1.second, () ⇒ 0).runWith(Sink.fromSubscriber(downstream))
 
       downstream.ensureSubscription()
-      downstream.expectNoMsg(1.5.second)
+      downstream.expectNoMessage(1.5.second)
       upstream.sendNext(1)
-      downstream.expectNoMsg(0.5.second)
+      downstream.expectNoMessage(0.5.second)
       downstream.request(1)
       downstream.expectNext(1)
 
@@ -123,9 +123,9 @@ class FlowIdleInjectSpec extends StreamSpec {
       downstream.request(10)
       downstream.expectNextN(1 to 10)
 
-      downstream.expectNoMsg(1.5.second)
+      downstream.expectNoMessage(1.5.second)
       upstream.sendNext(1)
-      downstream.expectNoMsg(0.5.second)
+      downstream.expectNoMessage(0.5.second)
       downstream.request(1)
       downstream.expectNext(1)
 
@@ -140,10 +140,10 @@ class FlowIdleInjectSpec extends StreamSpec {
       Source.fromPublisher(upstream).keepAlive(1.second, () ⇒ 0).runWith(Sink.fromSubscriber(downstream))
 
       downstream.request(2)
-      downstream.expectNoMsg(500.millis)
+      downstream.expectNoMessage(500.millis)
       downstream.expectNext(0)
 
-      downstream.expectNoMsg(500.millis)
+      downstream.expectNoMessage(500.millis)
       downstream.expectNext(0)
     }
 

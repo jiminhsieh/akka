@@ -58,7 +58,7 @@ class SinkForeachParallelSpec extends StreamSpec {
         Await.ready(latch(n), 5.seconds)
       }))
       probe.expectMsgAllOf(1, 2, 3, 4)
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       assert(!p.isCompleted)
 

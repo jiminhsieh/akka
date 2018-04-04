@@ -303,13 +303,13 @@ class ClusterSingletonManagerSpec extends MultiNodeSpec(ClusterSingletonManagerS
     runOn(controller) {
       queue ! msg
       // make sure it's not terminated, which would be wrong
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
     runOn(oldest) {
       expectMsg(5.seconds, msg)
     }
     runOn(roles.filterNot(r ⇒ r == oldest || r == controller || r == observer): _*) {
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
     enterBarrier("after-" + msg + "-verified")
   }

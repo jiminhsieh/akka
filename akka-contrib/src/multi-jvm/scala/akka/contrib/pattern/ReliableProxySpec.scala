@@ -73,9 +73,9 @@ class ReliableProxySpec extends MultiNodeSpec(ReliableProxySpec) with STMultiNod
   def sendN(n: Int) = (1 to n) foreach (proxy ! _)
   def expectN(n: Int) = (1 to n) foreach { n ⇒ expectMsg(n); lastSender should ===(target) }
 
-  // avoid too long timeout for expectNoMsg when using dilated timeouts, because
+  // avoid too long timeout for expectNoMessage when using dilated timeouts, because
   // blackhole will trigger failure detection
-  val expectNoMsgTimeout = {
+  val expectNoMessageTimeout = {
     val timeFactor = TestKitExtension(system).TestTimeFactor
     if (timeFactor > 1.0) (1.0 / timeFactor).seconds else 1.second
   }
@@ -143,13 +143,13 @@ class ReliableProxySpec extends MultiNodeSpec(ReliableProxySpec) with STMultiNod
         testConductor.blackhole(local, remote, Direction.Send).await
         sendN(100)
         expectTransition(1 second, Idle, Active)
-        expectNoMsg(expectNoMsgTimeout)
+        expectNoMessage(expectNoMessageTimeout)
       }
 
       enterBarrier("test2a")
 
       runOn(remote) {
-        expectNoMsg(0 seconds)
+        expectNoMessage(0 seconds)
       }
 
       enterBarrier("test2b")
@@ -172,7 +172,7 @@ class ReliableProxySpec extends MultiNodeSpec(ReliableProxySpec) with STMultiNod
         testConductor.blackhole(local, remote, Direction.Receive).await
         sendN(100)
         expectTransition(1 second, Idle, Active)
-        expectNoMsg(expectNoMsgTimeout)
+        expectNoMessage(expectNoMessageTimeout)
       }
       runOn(remote) {
         within(5 second) {
@@ -209,7 +209,7 @@ class ReliableProxySpec extends MultiNodeSpec(ReliableProxySpec) with STMultiNod
         within(5 seconds) {
           expectN(50)
         }
-        expectNoMsg(expectNoMsgTimeout)
+        expectNoMessage(expectNoMessageTimeout)
       }
 
       enterBarrier("test4")
@@ -235,7 +235,7 @@ class ReliableProxySpec extends MultiNodeSpec(ReliableProxySpec) with STMultiNod
         within(5 second) {
           expectN(50)
         }
-        expectNoMsg(1 seconds)
+        expectNoMessage(1 seconds)
       }
 
       enterBarrier("test5")

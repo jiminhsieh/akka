@@ -179,7 +179,7 @@ class ActorPublisherSpec extends StreamSpec(ActorPublisherSpec.config) with Impl
       ref ! Produce("elem-3")
       s.expectNext("elem-1")
       s.expectNext("elem-2")
-      s.expectNoMsg(300.millis)
+      s.expectNoMessage(300.millis)
       s.cancel()
     }
 
@@ -202,7 +202,7 @@ class ActorPublisherSpec extends StreamSpec(ActorPublisherSpec.config) with Impl
       probe.watch(ref)
       ref ! Err("wrong")
       s.expectError().getMessage should be("wrong")
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
     }
 
     "terminate after signalling onErrorThenStop" in {
@@ -237,7 +237,7 @@ class ActorPublisherSpec extends StreamSpec(ActorPublisherSpec.config) with Impl
       s.cancel()
       ref ! Produce("elem-2")
       s.expectNext("elem-1")
-      s.expectNoMsg(300.millis)
+      s.expectNoMessage(300.millis)
     }
 
     "remember requested after restart" in {
@@ -283,7 +283,7 @@ class ActorPublisherSpec extends StreamSpec(ActorPublisherSpec.config) with Impl
       ref ! Complete
       s.expectNext("elem-1")
       s.expectComplete()
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
     }
 
     "terminate after signalling onCompleteThenStop" in {
@@ -442,7 +442,7 @@ class ActorPublisherSpec extends StreamSpec(ActorPublisherSpec.config) with Impl
         pub.subscribe(sub)
         sub.expectSubscription()
 
-        expectNoMsg()
+        expectNoMessage()
       }
     }
 

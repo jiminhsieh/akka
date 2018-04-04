@@ -49,7 +49,7 @@ class FlowThrottleSpec extends StreamSpec {
         .runWith(TestSink.probe[Int])
         .request(5)
         .expectNext(1)
-        .expectNoMsg(100.millis)
+        .expectNoMessage(100.millis)
         .cancel() // We won't wait 100 days, sorry
     }
 
@@ -78,11 +78,11 @@ class FlowThrottleSpec extends StreamSpec {
 
       downstream.request(20)
       upstream.sendNext(1)
-      downstream.expectNoMsg(150.millis)
+      downstream.expectNoMessage(150.millis)
       downstream.expectNext(1)
 
       upstream.sendNext(2)
-      downstream.expectNoMsg(150.millis)
+      downstream.expectNoMessage(150.millis)
       downstream.expectNext(2)
 
       upstream.sendComplete()
@@ -98,7 +98,7 @@ class FlowThrottleSpec extends StreamSpec {
       upstream.sendNext(1)
       downstream.expectNext(1)
 
-      downstream.expectNoMsg(300.millis)
+      downstream.expectNoMessage(300.millis)
       upstream.sendNext(2)
       downstream.expectNext(2)
 
@@ -115,9 +115,9 @@ class FlowThrottleSpec extends StreamSpec {
       val probe = Source(1 to 10).throttle(2, 750.millis, 0, Shaping).runWith(TestSink.probe[Int])
         .request(5)
       probe.receiveWithin(900.millis) should be(Seq(1, 2))
-      probe.expectNoMsg(150.millis)
+      probe.expectNoMessage(150.millis)
         .expectNext(3)
-        .expectNoMsg(150.millis)
+        .expectNoMessage(150.millis)
         .expectNext(4)
         .cancel()
     }
@@ -133,7 +133,7 @@ class FlowThrottleSpec extends StreamSpec {
       downstream.receiveWithin(300.millis, 5) should be(1 to 5)
 
       downstream.request(5)
-      downstream.expectNoMsg(1200.millis)
+      downstream.expectNoMessage(1200.millis)
       for (i ← 7 to 11) upstream.sendNext(i)
       downstream.receiveWithin(300.millis, 5) should be(7 to 11)
       downstream.cancel()
@@ -151,9 +151,9 @@ class FlowThrottleSpec extends StreamSpec {
 
       downstream.request(1)
       upstream.sendNext(6)
-      downstream.expectNoMsg(100.millis)
+      downstream.expectNoMessage(100.millis)
       downstream.expectNext(6)
-      downstream.expectNoMsg(500.millis) //wait to receive 2 in burst afterwards
+      downstream.expectNoMessage(500.millis) //wait to receive 2 in burst afterwards
       downstream.request(5)
       for (i ← 7 to 10) upstream.sendNext(i)
       downstream.receiveWithin(100.millis, 2) should be(Seq(7, 8))
@@ -197,11 +197,11 @@ class FlowThrottleSpec extends StreamSpec {
         .runWith(TestSink.probe[ByteString])
         .request(4)
         .expectNext(list(0))
-        .expectNoMsg(300.millis)
+        .expectNoMessage(300.millis)
         .expectNext(list(1))
-        .expectNoMsg(500.millis)
+        .expectNoMessage(500.millis)
         .expectNext(list(2))
-        .expectNoMsg(700.millis)
+        .expectNoMessage(700.millis)
         .expectNext(list(3))
         .expectComplete()
     }
@@ -215,7 +215,7 @@ class FlowThrottleSpec extends StreamSpec {
       upstream.sendNext(1)
       downstream.expectNext(1)
 
-      downstream.expectNoMsg(300.millis)
+      downstream.expectNoMessage(300.millis)
       upstream.sendNext(2)
       downstream.expectNext(2)
 
@@ -232,9 +232,9 @@ class FlowThrottleSpec extends StreamSpec {
       val probe = Source(1 to 10).throttle(4, 500.millis, 0, _ ⇒ 2, Shaping).runWith(TestSink.probe[Int])
         .request(5)
       probe.receiveWithin(600.millis) should be(Seq(1, 2))
-      probe.expectNoMsg(100.millis)
+      probe.expectNoMessage(100.millis)
         .expectNext(3)
-        .expectNoMsg(100.millis)
+        .expectNoMessage(100.millis)
         .expectNext(4)
         .cancel()
     }
@@ -251,10 +251,10 @@ class FlowThrottleSpec extends StreamSpec {
 
       downstream.request(1)
       upstream.sendNext(6)
-      downstream.expectNoMsg(100.millis)
+      downstream.expectNoMessage(100.millis)
       downstream.expectNext(6)
       downstream.request(5)
-      downstream.expectNoMsg(1200.millis)
+      downstream.expectNoMessage(1200.millis)
       for (i ← 7 to 11) upstream.sendNext(i)
       downstream.receiveWithin(300.millis, 5) should be(7 to 11)
       downstream.cancel()
@@ -272,9 +272,9 @@ class FlowThrottleSpec extends StreamSpec {
 
       downstream.request(1)
       upstream.sendNext(6)
-      downstream.expectNoMsg(100.millis)
+      downstream.expectNoMessage(100.millis)
       downstream.expectNext(6)
-      downstream.expectNoMsg(500.millis) //wait to receive 2 in burst afterwards
+      downstream.expectNoMessage(500.millis) //wait to receive 2 in burst afterwards
       downstream.request(5)
       for (i ← 7 to 9) upstream.sendNext(i)
       downstream.receiveWithin(200.millis, 2) should be(Seq(7, 8))

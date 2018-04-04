@@ -88,7 +88,7 @@ abstract class ClusterDeathWatchSpec
         watchEstablished.await
         enterBarrier("watch-established")
         expectMsg(path2)
-        expectNoMsg(2 seconds)
+        expectNoMessage(2 seconds)
         enterBarrier("second-terminated")
 
         markNodeAsUnavailable(third)

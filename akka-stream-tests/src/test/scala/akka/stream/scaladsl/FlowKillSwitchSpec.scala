@@ -77,8 +77,8 @@ class FlowKillSwitchSpec extends StreamSpec {
       downstream.expectComplete()
 
       switch.abort(TE("Won't happen"))
-      upstream.expectNoMsg(100.millis)
-      downstream.expectNoMsg(100.millis)
+      upstream.expectNoMessage(100.millis)
+      downstream.expectNoMessage(100.millis)
     }
 
   }
@@ -175,12 +175,12 @@ class FlowKillSwitchSpec extends StreamSpec {
       downstream.expectComplete()
 
       switch.shutdown()
-      upstream.expectNoMsg(100.millis)
-      downstream.expectNoMsg(100.millis)
+      upstream.expectNoMessage(100.millis)
+      downstream.expectNoMessage(100.millis)
 
       switch.abort(TE("Abort"))
-      upstream.expectNoMsg(100.millis)
-      downstream.expectNoMsg(100.millis)
+      upstream.expectNoMessage(100.millis)
+      downstream.expectNoMessage(100.millis)
     }
 
     "ignore subsequent aborts and shutdowns after abort" in assertAllStagesStopped {
@@ -197,12 +197,12 @@ class FlowKillSwitchSpec extends StreamSpec {
       downstream.expectError(TE("Abort"))
 
       switch.shutdown()
-      upstream.expectNoMsg(100.millis)
-      downstream.expectNoMsg(100.millis)
+      upstream.expectNoMessage(100.millis)
+      downstream.expectNoMessage(100.millis)
 
       switch.abort(TE("Abort_Late"))
-      upstream.expectNoMsg(100.millis)
-      downstream.expectNoMsg(100.millis)
+      upstream.expectNoMessage(100.millis)
+      downstream.expectNoMessage(100.millis)
     }
 
     "complete immediately flows materialized after switch shutdown" in assertAllStagesStopped {
@@ -259,12 +259,12 @@ class FlowKillSwitchSpec extends StreamSpec {
       switch1.shutdown()
       upstream1.expectCancellation()
       downstream1.expectComplete()
-      upstream2.expectNoMsg(100.millis)
-      downstream2.expectNoMsg(100.millis)
+      upstream2.expectNoMessage(100.millis)
+      downstream2.expectNoMessage(100.millis)
 
       switch2.abort(TE("Abort"))
-      upstream1.expectNoMsg(100.millis)
-      downstream1.expectNoMsg(100.millis)
+      upstream1.expectNoMessage(100.millis)
+      downstream1.expectNoMessage(100.millis)
       upstream2.expectCancellation()
       downstream2.expectError(TE("Abort"))
     }
@@ -284,10 +284,10 @@ class FlowKillSwitchSpec extends StreamSpec {
       }).run()
 
       downstream.ensureSubscription()
-      downstream.expectNoMsg(100.millis)
+      downstream.expectNoMessage(100.millis)
 
       switch1.shutdown()
-      downstream.expectNoMsg(100.millis)
+      downstream.expectNoMessage(100.millis)
 
       switch2.shutdown()
       downstream.expectComplete()

@@ -129,7 +129,7 @@ class AskSpec extends AkkaSpec {
 
       Await.result(f, 1 seconds) should ===("hi")
 
-      deadListener.expectNoMsg(200 milliseconds)
+      deadListener.expectNoMessage(200 milliseconds)
     }
 
     "throw AskTimeoutException on using *" in {

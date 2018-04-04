@@ -38,7 +38,7 @@ class DeviceGroupSpec extends AkkaSpec {
       val groupActor = system.actorOf(DeviceGroup.props("group"))
 
       groupActor.tell(DeviceManager.RequestTrackDevice("wrongGroup", "device1"), probe.ref)
-      probe.expectNoMsg(500.milliseconds)
+      probe.expectNoMessage(500.milliseconds)
     }
 
     "return same actor for same deviceId" in {

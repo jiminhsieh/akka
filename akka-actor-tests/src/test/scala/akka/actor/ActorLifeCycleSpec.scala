@@ -63,7 +63,7 @@ class ActorLifeCycleSpec extends AkkaSpec("akka.actor.serialize-messages=off") w
         expectMsg(("OK", id, 3))
         restarter ! Kill
         expectMsg(("postStop", id, 3))
-        expectNoMsg(1 seconds)
+        expectNoMessage(1 seconds)
         system.stop(supervisor)
       }
     }
@@ -94,7 +94,7 @@ class ActorLifeCycleSpec extends AkkaSpec("akka.actor.serialize-messages=off") w
         expectMsg(("OK", id, 3))
         restarter ! Kill
         expectMsg(("postStop", id, 3))
-        expectNoMsg(1 seconds)
+        expectNoMessage(1 seconds)
         system.stop(supervisor)
       }
     }
@@ -112,7 +112,7 @@ class ActorLifeCycleSpec extends AkkaSpec("akka.actor.serialize-messages=off") w
       expectMsg(("OK", id, 0))
       system.stop(a)
       expectMsg(("postStop", id, 0))
-      expectNoMsg(1 seconds)
+      expectNoMessage(1 seconds)
       system.stop(supervisor)
     }
 

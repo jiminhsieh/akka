@@ -164,7 +164,7 @@ abstract class ClusterShardingMinMembersSpec(config: ClusterShardingMinMembersSp
       runOn(first) {
         region ! 1
         // not allocated because third has not registered yet
-        expectNoMsg(2.second)
+        expectNoMessage(2.second)
       }
       enterBarrier("verified")
 

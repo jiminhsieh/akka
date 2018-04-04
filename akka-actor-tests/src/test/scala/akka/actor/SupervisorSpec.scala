@@ -185,7 +185,7 @@ class SupervisorSpec extends AkkaSpec(SupervisorSpec.config) with BeforeAndAfter
 
   def killExpectNoRestart(pingPongActor: ActorRef) = {
     val result = (pingPongActor.?(DieReply)(DilatedTimeout))
-    expectNoMsg(500 milliseconds)
+    expectNoMessage(500 milliseconds)
     intercept[RuntimeException] { Await.result(result, DilatedTimeout) }
   }
 
@@ -196,7 +196,7 @@ class SupervisorSpec extends AkkaSpec(SupervisorSpec.config) with BeforeAndAfter
 
       master ! Die
       expectMsg(3 seconds, "terminated")
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "restart properly when same instance is returned" in {
@@ -245,7 +245,7 @@ class SupervisorSpec extends AkkaSpec(SupervisorSpec.config) with BeforeAndAfter
         expectMsg("postStop1")
       }
 
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "not restart temporary actor" in {
@@ -253,13 +253,13 @@ class SupervisorSpec extends AkkaSpec(SupervisorSpec.config) with BeforeAndAfter
 
       intercept[RuntimeException] { Await.result(temporaryActor.?(DieReply)(DilatedTimeout), DilatedTimeout) }
 
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "start server for nested supervisor hierarchy" in {
       val (actor1, _, _, _) = nestedSupervisorsAllForOne
       ping(actor1)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "kill single actor OneForOne" in {

@@ -205,7 +205,7 @@ trait DeathWatchSpec { this: AkkaSpec with ImplicitSender with DefaultTimeout â‡
         .sendSystemMessage(DeathWatchNotification(subject, existenceConfirmed = true, addressTerminated = false))
 
       // the testActor is not watching subject and will not receive a Terminated msg
-      expectNoMsg
+      expectNoMessage
     }
 
     "discard Terminated when unwatched between sysmsg and processing" in {

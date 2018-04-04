@@ -289,7 +289,7 @@ class DistributedPubSubMediatorSpec extends MultiNodeSpec(DistributedPubSubMedia
         lastSender.path.name should ===("u7")
       }
       runOn(third) {
-        expectNoMsg(2.seconds)
+        expectNoMessage(2.seconds)
       }
 
       enterBarrier("after-6")
@@ -328,7 +328,7 @@ class DistributedPubSubMediatorSpec extends MultiNodeSpec(DistributedPubSubMedia
         lastSender.path.name should ===("u10")
       }
       runOn(third) {
-        expectNoMsg(2.seconds)
+        expectNoMessage(2.seconds)
       }
 
       enterBarrier("after-7")
@@ -404,7 +404,7 @@ class DistributedPubSubMediatorSpec extends MultiNodeSpec(DistributedPubSubMedia
         lastSender.path.name should ===("u11")
       }
       runOn(third) {
-        expectNoMsg(2.seconds) // sender() node should not receive a message
+        expectNoMessage(2.seconds) // sender() node should not receive a message
       }
 
       enterBarrier("after-11")
@@ -434,7 +434,7 @@ class DistributedPubSubMediatorSpec extends MultiNodeSpec(DistributedPubSubMedia
 
       runOn(first, second) {
         expectMsg("hi")
-        expectNoMsg(2.seconds) // each group receive only one message
+        expectNoMessage(2.seconds) // each group receive only one message
       }
       enterBarrier("12-published")
 

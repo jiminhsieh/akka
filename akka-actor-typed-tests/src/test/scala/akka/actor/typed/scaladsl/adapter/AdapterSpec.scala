@@ -279,7 +279,7 @@ class AdapterSpec extends AkkaSpec {
       // only stop supervisorStrategy
       typedRef ! "supervise-stop"
       probe.expectMsg("terminated")
-      probe.expectNoMsg(100.millis) // no pong
+      probe.expectNoMessage(100.millis) // no pong
     }
 
     "stop typed child from untyped parent" in {

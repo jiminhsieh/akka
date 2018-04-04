@@ -178,7 +178,7 @@ trait TestKitBase {
   private var end: Duration = Duration.Undefined
 
   /**
-   * if last assertion was expectNoMsg, disable timing failure upon within()
+   * if last assertion was expectNoMessage, disable timing failure upon within()
    * block end.
    */
   private var lastWasNoMsg = false

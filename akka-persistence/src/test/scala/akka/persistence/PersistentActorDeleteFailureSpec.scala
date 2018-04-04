@@ -67,7 +67,7 @@ class PersistentActorDeleteFailureSpec extends PersistenceSpec(PersistenceSpec.c
       system.eventStream.subscribe(testActor, classOf[Logging.Warning])
       persistentActor ! DeleteTo(100)
       expectMsgType[DeleteMessagesFailure]
-      expectNoMsg(100.millis) // since the actor handled the message, we do not issue warn logging automatically
+      expectNoMessage(100.millis) // since the actor handled the message, we do not issue warn logging automatically
     }
 
   }

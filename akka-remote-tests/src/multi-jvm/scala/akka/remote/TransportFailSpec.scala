@@ -144,7 +144,7 @@ abstract class TransportFailSpec extends RemotingMultiNodeSpec(TransportFailConf
           }
         }, max = 5.seconds)
         watch(subject2)
-        quarantineProbe.expectNoMsg(1.seconds)
+        quarantineProbe.expectNoMessage(1.seconds)
         subject2 ! "hello2"
         expectMsg("hello2")
         enterBarrier("watch-established2")

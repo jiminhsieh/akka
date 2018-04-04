@@ -294,7 +294,7 @@ class ActorSelectionSpec extends AkkaSpec with DefaultTimeout {
         case `c1` ⇒ lastSender
       }
       actors should ===(Set(c1, c2))
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "drop messages which cannot be delivered" in {
@@ -304,7 +304,7 @@ class ActorSelectionSpec extends AkkaSpec with DefaultTimeout {
         case `c2` ⇒ lastSender
       }
       actors should ===(Seq(c21))
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
     }
 
     "resolve one actor with explicit timeout" in {
@@ -369,33 +369,33 @@ class ActorSelectionSpec extends AkkaSpec with DefaultTimeout {
       val probe = TestProbe()
       system.actorSelection("/user/a/*").tell(Identify(1), probe.ref)
       probe.receiveN(2).map { case ActorIdentity(1, r) ⇒ r }.toSet should ===(Set[Option[ActorRef]](Some(b1), Some(b2)))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/b1/*").tell(Identify(2), probe.ref)
       probe.expectMsg(ActorIdentity(2, None))
 
       system.actorSelection("/user/a/*/c").tell(Identify(3), probe.ref)
       probe.expectMsg(ActorIdentity(3, Some(c)))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/b2/*/d").tell(Identify(4), probe.ref)
       probe.expectMsg(ActorIdentity(4, Some(d)))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/*/*/d").tell(Identify(5), probe.ref)
       probe.expectMsg(ActorIdentity(5, Some(d)))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/*/c/*").tell(Identify(6), probe.ref)
       probe.expectMsg(ActorIdentity(6, Some(d)))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/b2/*/d/e").tell(Identify(7), probe.ref)
       probe.expectMsg(ActorIdentity(7, None))
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       system.actorSelection("/user/a/*/c/d/e").tell(Identify(8), probe.ref)
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
     }
 
     "forward to selection" in {

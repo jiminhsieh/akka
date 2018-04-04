@@ -175,7 +175,7 @@ class GraphZipNSpec extends TwoStreamsSetup {
 
       upstream1.sendNext(1)
       upstream1.sendComplete()
-      downstream.expectNoMsg(500.millis)
+      downstream.expectNoMessage(500.millis)
 
       upstream2.sendNext(2)
       upstream2.sendComplete()

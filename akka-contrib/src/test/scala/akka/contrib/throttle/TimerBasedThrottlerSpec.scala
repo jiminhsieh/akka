@@ -64,7 +64,7 @@ class TimerBasedThrottlerSpec extends TestKit(ActorSystem("TimerBasedThrottlerSp
       val echo = system.actorOf(TestActors.echoActorProps)
       val throttler = system.actorOf(Props(classOf[TimerBasedThrottler], 3 msgsPer (1.second.dilated)))
       1 to 6 foreach { throttler ! _ }
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       throttler ! SetTarget(Some(echo))
       within(2.5 seconds) {
         1 to 6 foreach { expectMsg(_) }
@@ -79,9 +79,9 @@ class TimerBasedThrottlerSpec extends TestKit(ActorSystem("TimerBasedThrottlerSp
       throttler ! SetTarget(None)
       within(1.7 second) {
         expectMsg(1)
-        expectNoMsg()
+        expectNoMessage()
       }
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       throttler ! SetTarget(Some(echo))
       4 to 7 foreach { throttler ! _ }
       within(10.5 seconds) {
@@ -97,9 +97,9 @@ class TimerBasedThrottlerSpec extends TestKit(ActorSystem("TimerBasedThrottlerSp
       throttler ! SetTarget(None)
       within(1.7 second) {
         expectMsg(1)
-        expectNoMsg()
+        expectNoMessage()
       }
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       throttler ! SetTarget(Some(echo))
       within(10.5 seconds) {
         2 to 7 foreach { expectMsg(_) }

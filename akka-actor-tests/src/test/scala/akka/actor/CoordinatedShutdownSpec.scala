@@ -260,7 +260,7 @@ class CoordinatedShutdownSpec extends AkkaSpec(ConfigFactory.parseString(
       intercept[TimeoutException] {
         Await.result(result, remainingOrDefault)
       }
-      expectNoMsg(200.millis) // C not run
+      expectNoMessage(200.millis) // C not run
     }
 
     "skip tasks in disabled phase" in {

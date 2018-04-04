@@ -32,7 +32,7 @@ class FlowSplitWhenSpec extends StreamSpec {
 
     def request(demand: Int): Unit = subscription.request(demand)
     def expectNext(elem: Int): Unit = probe.expectNext(elem)
-    def expectNoMsg(max: FiniteDuration): Unit = probe.expectNoMsg(max)
+    def expectNoMessage(max: FiniteDuration): Unit = probe.expectNoMessage(max)
     def expectComplete(): Unit = probe.expectComplete()
     def expectError(e: Throwable) = probe.expectError(e)
     def cancel(): Unit = subscription.cancel()
@@ -67,7 +67,7 @@ class FlowSplitWhenSpec extends StreamSpec {
     "work in the happy case" in assertAllStagesStopped {
       new SubstreamsSupport(elementCount = 4) {
         val s1 = StreamPuppet(getSubFlow().runWith(Sink.asPublisher(false)))
-        masterSubscriber.expectNoMsg(100.millis)
+        masterSubscriber.expectNoMessage(100.millis)
 
         s1.request(2)
         s1.expectNext(1)
@@ -79,7 +79,7 @@ class FlowSplitWhenSpec extends StreamSpec {
 
         s2.request(1)
         s2.expectNext(3)
-        s2.expectNoMsg(100.millis)
+        s2.expectNoMessage(100.millis)
 
         s2.request(1)
         s2.expectNext(4)
@@ -153,7 +153,7 @@ class FlowSplitWhenSpec extends StreamSpec {
       substream.cancel()
 
       masterStream.expectNext(NotUsed)
-      masterStream.expectNoMsg(100.millis)
+      masterStream.expectNoMessage(100.millis)
       masterStream.cancel()
       inputs.expectCancellation()
 
@@ -189,15 +189,15 @@ class FlowSplitWhenSpec extends StreamSpec {
       src2.runWith(Sink.fromSubscriber(substream4))
 
       substream4.requestNext(2)
-      substream4.expectNoMsg(100.millis)
-      masterStream3.expectNoMsg(100.millis)
+      substream4.expectNoMessage(100.millis)
+      masterStream3.expectNoMessage(100.millis)
       inputs3.expectRequest()
       inputs3.expectRequest()
-      inputs3.expectNoMsg(100.millis)
+      inputs3.expectNoMessage(100.millis)
 
       substream4.cancel()
-      inputs3.expectNoMsg(100.millis)
-      masterStream3.expectNoMsg(100.millis)
+      inputs3.expectNoMessage(100.millis)
+      masterStream3.expectNoMessage(100.millis)
 
       masterStream3.cancel()
       inputs3.expectCancellation()

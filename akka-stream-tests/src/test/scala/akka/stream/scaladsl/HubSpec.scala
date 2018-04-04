@@ -77,7 +77,7 @@ class HubSpec extends StreamSpec {
       expectMsg(1)
       expectMsg(2)
       expectMsg(3)
-      expectNoMsg(100.millis)
+      expectNoMessage(100.millis)
 
       // One element consumed (it was requested), demand 0 remains at producer
       downstream.expectNext(1)
@@ -91,7 +91,7 @@ class HubSpec extends StreamSpec {
 
       expectMsg(4)
       expectMsg(5)
-      expectNoMsg(100.millis)
+      expectNoMessage(100.millis)
 
       // Two additional elements have been sent:
       //  - 3, 4, 5 are pending
@@ -103,7 +103,7 @@ class HubSpec extends StreamSpec {
       sub.request(1)
       downstream.expectNext(3)
 
-      expectNoMsg(100.millis)
+      expectNoMessage(100.millis)
 
       sub.request(1)
       downstream.expectNext(4)
@@ -323,8 +323,8 @@ class HubSpec extends StreamSpec {
       downstream1.expectNext(1, 2, 3, 4)
       downstream2.expectNext(1, 2, 3, 4, 5, 6, 7, 8)
 
-      downstream1.expectNoMsg(100.millis)
-      downstream2.expectNoMsg(100.millis)
+      downstream1.expectNoMessage(100.millis)
+      downstream2.expectNoMessage(100.millis)
 
       upstream.sendError(TE("Failed"))
 
@@ -489,7 +489,7 @@ class HubSpec extends StreamSpec {
       testSource.sendNext(7)
       probe1.expectNext(5)
       probe1.expectNext(7)
-      probe0.expectNoMsg(10.millis)
+      probe0.expectNoMessage(10.millis)
       probe0.request(10)
       probe0.expectNext(6)
 
@@ -590,8 +590,8 @@ class HubSpec extends StreamSpec {
       downstream1.expectNext(0, 2, 4, 6)
       downstream2.expectNext(1, 3, 5, 7, 9, 11, 13, 15)
 
-      downstream1.expectNoMsg(100.millis)
-      downstream2.expectNoMsg(100.millis)
+      downstream1.expectNoMessage(100.millis)
+      downstream2.expectNoMessage(100.millis)
 
       upstream.sendError(TE("Failed"))
 

@@ -114,11 +114,11 @@ class ActorSubscriberSpec extends StreamSpec with ImplicitSender {
 
     "receive requested elements" in {
       val ref = Source(List(1, 2, 3)).runWith(Sink.actorSubscriber(manualSubscriberProps(testActor)))
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
       ref ! "ready" // requesting 2
       expectMsg(OnNext(1))
       expectMsg(OnNext(2))
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
       ref ! "ready"
       expectMsg(OnNext(3))
       expectMsg(OnComplete)
@@ -138,13 +138,13 @@ class ActorSubscriberSpec extends StreamSpec with ImplicitSender {
       ref ! "ready"
       expectMsg(OnNext(1))
       expectMsg(OnNext(2))
-      expectNoMsg(200.millis) // nothing requested
+      expectNoMessage(200.millis) // nothing requested
       ref ! "boom"
       ref ! "ready"
       ref ! "ready"
       ref ! "boom"
       (3 to 6) foreach { n ⇒ expectMsg(OnNext(n)) }
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
       ref ! "ready"
       expectMsg(OnNext(7))
       expectMsg(OnComplete)
@@ -156,7 +156,7 @@ class ActorSubscriberSpec extends StreamSpec with ImplicitSender {
       expectMsg(OnNext(1))
       expectMsg(OnNext(2))
       ref ! "requestAndCancel"
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
     }
 
     "terminate after cancel" in {
@@ -170,7 +170,7 @@ class ActorSubscriberSpec extends StreamSpec with ImplicitSender {
       val ref = system.actorOf(immediatelyCancelledSubscriberProps(testActor))
       val sub = ActorSubscriber(ref)
       watch(ref)
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
 
       sub.onSubscribe(new Subscription {
         override def cancel(): Unit = testActor ! "cancel"

@@ -104,7 +104,7 @@ class BackoffOnRestartSupervisorSpec extends AkkaSpec with ImplicitSender {
         val supervisorChildSelection = system.actorSelection(supervisor.path / "*")
         supervisorChildSelection.tell("testmsg", probe.ref)
         probe.expectMsg("testmsg")
-        probe.expectNoMsg
+        probe.expectNoMessage
       }
     }
 
@@ -156,7 +156,7 @@ class BackoffOnRestartSupervisorSpec extends AkkaSpec with ImplicitSender {
       expectMsg("THROWN")
 
       child ! "PING"
-      expectNoMsg(100.millis) // Child is in limbo due to latch in postStop. There is no Terminated message yet
+      expectNoMessage(100.millis) // Child is in limbo due to latch in postStop. There is no Terminated message yet
 
       supervisor ! BackoffSupervisor.GetCurrentChild
       expectMsgType[BackoffSupervisor.CurrentChild].ref should ===(Some(child))

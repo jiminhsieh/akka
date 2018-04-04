@@ -134,13 +134,13 @@ class UntrustedSpec extends ArteryMultiNodeSpec(UntrustedSpec.config) with Impli
       receptionist ! StopChild("child2")
       expectMsg("child2 stopped")
       // no Terminated msg, since watch was discarded
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
     "discard actor selection" in {
       val sel = client.actorSelection(RootActorPath(address) / testActor.path.elements)
       sel ! "hello"
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
     "discard actor selection with non root anchor" in {
@@ -151,25 +151,25 @@ class UntrustedSpec extends ArteryMultiNodeSpec(UntrustedSpec.config) with Impli
 
       val sel = ActorSelection(clientReceptionistRef, receptionist.path.toStringWithoutAddress)
       sel ! "hello"
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
     "discard actor selection to child of matching white list" in {
       val sel = client.actorSelection(RootActorPath(address) / receptionist.path.elements / "child1")
       sel ! "hello"
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
     "discard actor selection with wildcard" in {
       val sel = client.actorSelection(RootActorPath(address) / receptionist.path.elements / "*")
       sel ! "hello"
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
     "discard actor selection containing harmful message" in {
       val sel = client.actorSelection(RootActorPath(address) / receptionist.path.elements)
       sel ! PoisonPill
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
     }
 
   }

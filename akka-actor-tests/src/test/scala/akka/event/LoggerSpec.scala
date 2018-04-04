@@ -158,7 +158,7 @@ class LoggerSpec extends WordSpec with Matchers {
             case _                 ⇒ false
           }
         } else {
-          probe.expectNoMsg(0.5.seconds.dilated)
+          probe.expectNoMessage(0.5.seconds.dilated)
         }
       } finally {
         TestKit.shutdownActorSystem(system)

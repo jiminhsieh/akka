@@ -116,20 +116,20 @@ class GraphUnzipWithSpec extends StreamSpec {
 
       leftProbe.expectNext(2)
       leftProbe.expectNext(4)
-      leftProbe.expectNoMsg(100.millis)
+      leftProbe.expectNoMessage(100.millis)
 
       rightProbe.expectNext("1+1")
-      rightProbe.expectNoMsg(100.millis)
+      rightProbe.expectNoMessage(100.millis)
 
       leftSubscription.request(1)
       rightSubscription.request(2)
 
       leftProbe.expectNext(6)
-      leftProbe.expectNoMsg(100.millis)
+      leftProbe.expectNoMessage(100.millis)
 
       rightProbe.expectNext("2+2")
       rightProbe.expectNext("3+3")
-      rightProbe.expectNoMsg(100.millis)
+      rightProbe.expectNoMessage(100.millis)
 
       leftSubscription.request(1)
       rightSubscription.request(1)
@@ -184,8 +184,8 @@ class GraphUnzipWithSpec extends StreamSpec {
       }
       rightProbe.expectError()
 
-      leftProbe.expectNoMsg(100.millis)
-      rightProbe.expectNoMsg(100.millis)
+      leftProbe.expectNoMessage(100.millis)
+      rightProbe.expectNoMessage(100.millis)
     }
 
     "unzipWith expanded Person.unapply (3 outputs)" in {

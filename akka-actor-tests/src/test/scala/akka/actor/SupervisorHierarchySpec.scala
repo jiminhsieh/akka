@@ -811,7 +811,7 @@ class SupervisorHierarchySpec extends AkkaSpec(SupervisorHierarchySpec.config) w
         boss ! "fail"
         awaitCond(worker.asInstanceOf[LocalActorRef].underlying.mailbox.isSuspended)
         worker ! "ping"
-        expectNoMsg(2 seconds)
+        expectNoMessage(2 seconds)
         latch.countDown()
       }
       expectMsg("pong")

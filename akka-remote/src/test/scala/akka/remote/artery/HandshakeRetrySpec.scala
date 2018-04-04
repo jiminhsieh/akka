@@ -32,7 +32,7 @@ class HandshakeRetrySpec extends ArteryMultiNodeSpec(HandshakeRetrySpec.commonCo
     "be retried during handshake-timeout (no message loss)" in {
       def sel = system.actorSelection(s"akka://systemB@localhost:$portB/user/echo")
       sel ! "hello"
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
 
       val systemB = newRemoteSystem(
         name = Some("systemB"),

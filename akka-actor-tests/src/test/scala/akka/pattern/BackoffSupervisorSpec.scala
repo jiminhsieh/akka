@@ -216,7 +216,7 @@ class BackoffSupervisorSpec extends AkkaSpec with ImplicitSender {
         }
 
         supervisor ! "boom" //this will be sent to deadLetters
-        expectNoMsg(500.milliseconds)
+        expectNoMessage(500.milliseconds)
       }
     }
 

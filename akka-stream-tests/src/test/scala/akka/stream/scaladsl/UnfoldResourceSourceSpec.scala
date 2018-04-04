@@ -57,7 +57,7 @@ class UnfoldResourceSourceSpec extends StreamSpec(UnboundedMailboxConfig) {
       c.expectNext() should ===(chunks.next())
       sub.request(1)
       c.expectNext() should ===(chunks.next())
-      c.expectNoMsg(300.millis)
+      c.expectNoMessage(300.millis)
 
       while (chunks.hasNext) {
         sub.request(1)

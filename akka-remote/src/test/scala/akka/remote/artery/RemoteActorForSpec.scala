@@ -91,7 +91,7 @@ class RemoteActorForSpec extends ArteryMultiNodeSpec("akka.loglevel=INFO") with 
       // msg to old ActorRef (different uid) should not get through
       child2.path.uid should not be (child.path.uid)
       child ! 46
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
       system.actorFor(system / "looker1" / "child") ! 47
       expectMsg(47)
     }

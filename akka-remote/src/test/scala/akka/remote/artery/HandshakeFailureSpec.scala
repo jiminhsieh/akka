@@ -33,7 +33,7 @@ class HandshakeFailureSpec extends ArteryMultiNodeSpec(HandshakeFailureSpec.comm
     "allow for timeout and later connect" in {
       def sel = system.actorSelection(s"akka://systemB@localhost:$portB/user/echo")
       sel ! "hello"
-      expectNoMsg(3.seconds) // longer than handshake-timeout
+      expectNoMessage(3.seconds) // longer than handshake-timeout
 
       val systemB = newRemoteSystem(
         name = Some("systemB"),

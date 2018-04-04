@@ -58,7 +58,7 @@ class FlowExtrapolateSpec extends StreamSpec {
       publisher.sendNext(-42)
 
       // The request below is otherwise in race with the above sendNext
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
       subscriber.requestNext(-42)
 
       subscriber.cancel()
@@ -94,7 +94,7 @@ class FlowExtrapolateSpec extends StreamSpec {
       publisher.sendComplete()
 
       // The request below is otherwise in race with the above sendNext(2) (and completion)
-      subscriber.expectNoMsg(500.millis)
+      subscriber.expectNoMessage(500.millis)
 
       subscriber.requestNext(2)
       subscriber.expectComplete()
@@ -134,7 +134,7 @@ class FlowExtrapolateSpec extends StreamSpec {
         pending -= 1
       }
 
-      publisher.expectNoMsg(1.second)
+      publisher.expectNoMessage(1.second)
 
       subscriber.request(2)
       subscriber.expectNext(2)
@@ -156,7 +156,7 @@ class FlowExtrapolateSpec extends StreamSpec {
       sink
         .request(4)
         .expectNext(1 → 0, 1 → 1, 1 → 2)
-        .expectNoMsg(100.millis)
+        .expectNoMessage(100.millis)
       source
         .sendNext(2)
         .sendComplete()

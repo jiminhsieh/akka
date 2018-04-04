@@ -100,7 +100,7 @@ class KeepGoingStageSpec extends StreamSpec {
       maybePromise.trySuccess(None)
       expectMsg(UpstreamCompleted)
 
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
 
       pinger.ping()
       expectMsg(Pong)
@@ -131,7 +131,7 @@ class KeepGoingStageSpec extends StreamSpec {
       maybePromise.trySuccess(None)
       expectMsg(UpstreamCompleted)
 
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
 
       pinger.ping()
       expectMsg(Pong)
@@ -162,7 +162,7 @@ class KeepGoingStageSpec extends StreamSpec {
       maybePromise.trySuccess(None)
       expectMsg(UpstreamCompleted)
 
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
 
       pinger.ping()
       expectMsg(Pong)

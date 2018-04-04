@@ -75,7 +75,7 @@ class OutputStreamSourceSpec extends StreamSpec(UnboundedMailboxConfig) {
       val f = Future(outputStream.flush())
 
       expectTimeout(f, timeout)
-      probe.expectNoMsg(Zero)
+      probe.expectNoMessage(Zero)
 
       s.request(1)
       expectSuccess(f, ())
@@ -114,7 +114,7 @@ class OutputStreamSourceSpec extends StreamSpec(UnboundedMailboxConfig) {
       val f = Future(outputStream.write(bytesArray))
 
       expectTimeout(f, timeout)
-      probe.expectNoMsg(Zero)
+      probe.expectNoMessage(Zero)
 
       s.request(17)
       expectSuccess(f, ())

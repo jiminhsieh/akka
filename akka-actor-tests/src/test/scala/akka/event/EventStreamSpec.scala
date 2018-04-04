@@ -87,7 +87,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
         expectMsg(M(42))
         bus.unsubscribe(testActor)
         bus.publish(M(13))
-        expectNoMsg
+        expectNoMessage
       }
     }
 
@@ -154,7 +154,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
         bus.publish(a)
         expectMsg(b2)
         expectMsg(a)
-        expectNoMsg
+        expectNoMessage
       }
     }
 
@@ -196,7 +196,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
       es.publish(tm2)
       a1.expectMsgType[AT] should ===(tm2)
       a2.expectMsgType[BT] should ===(tm2)
-      a3.expectNoMsg(1 second)
+      a3.expectNoMessage(1 second)
       a4.expectMsgType[CCATBT] should ===(tm2)
       es.unsubscribe(a1.ref, classOf[AT]) should ===(true)
       es.unsubscribe(a2.ref, classOf[BT]) should ===(true)
@@ -218,7 +218,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
       es.publish(tm2)
       a1.expectMsgType[AT] should ===(tm2)
       a2.expectMsgType[BT] should ===(tm2)
-      a3.expectNoMsg(1 second)
+      a3.expectNoMessage(1 second)
       a4.expectMsgType[CCATBT] should ===(tm2)
       es.unsubscribe(a1.ref, classOf[AT]) should ===(true)
       es.unsubscribe(a2.ref, classOf[BT]) should ===(true)
@@ -271,7 +271,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
       es.subscribe(a1.ref, classOf[AT]) should ===(true)
       es.publish(tm1)
       a1.expectMsgType[AT] should ===(tm1)
-      a2.expectNoMsg(1 second)
+      a2.expectNoMessage(1 second)
       es.subscribe(a2.ref, classOf[BTT]) should ===(true)
       es.publish(tm1)
       a1.expectMsgType[AT] should ===(tm1)
@@ -302,7 +302,7 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
 
         es.publish(tm)
 
-        a1.expectNoMsg(1 second)
+        a1.expectNoMessage(1 second)
         a2.expectMsg(tm)
       } finally {
         shutdown(sys)
@@ -390,12 +390,12 @@ class EventStreamSpec extends AkkaSpec(EventStreamSpec.config) {
 
         es.unsubscribe(a2.ref, classOf[A]) should equal(true)
         fishForDebugMessage(a1, s"unsubscribing ${a2.ref} from channel class akka.event.EventStreamSpec$$A")
-        a1.expectNoMsg(1 second)
+        a1.expectNoMessage(1 second)
 
         es.unsubscribe(a2.ref, classOf[T]) should equal(true)
         fishForDebugMessage(a1, s"unsubscribing ${a2.ref} from channel interface akka.event.EventStreamSpec$$T")
         fishForDebugMessage(a1, s"unwatching ${a2.ref}, since has no subscriptions")
-        a1.expectNoMsg(1 second)
+        a1.expectNoMessage(1 second)
 
         es.unsubscribe(a2.ref, classOf[T]) should equal(false)
 

@@ -32,7 +32,7 @@ class SupervisorTreeSpec extends AkkaSpec("akka.actor.serialize-messages = off")
           middleActor ! Kill
           expectMsg(middleActor.path)
           expectMsg(lastActor.path)
-          expectNoMsg(2 seconds)
+          expectNoMessage(2 seconds)
           system.stop(headActor)
         }
       }

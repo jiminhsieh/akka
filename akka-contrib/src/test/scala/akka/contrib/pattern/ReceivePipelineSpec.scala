@@ -280,7 +280,7 @@ class PersistentReceivePipelineSpec(config: Config) extends AkkaSpec(config) wit
 
       replier ! 4
       expectMsg(2)
-      probe.expectNoMsg(100.millis)
+      probe.expectNoMessage(100.millis)
     }
 
     "continue to handle messages normally after unhandled messages" in {

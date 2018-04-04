@@ -140,8 +140,8 @@ class WriteAggregatorSpec extends AkkaSpec(s"""
       import system.dispatcher
       Future.sequence {
         Seq(
-          Future { testProbes(nodeC).expectNoMsg(t) },
-          Future { testProbes(nodeD).expectNoMsg(t) })
+          Future { testProbes(nodeC).expectNoMessage(t) },
+          Future { testProbes(nodeD).expectNoMessage(t) })
       }.futureValue
       testProbes(nodeC).expectMsgType[Write]
       testProbes(nodeC).lastSender ! WriteAck
@@ -229,8 +229,8 @@ class WriteAggregatorSpec extends AkkaSpec(s"""
       testProbes(nodeA).lastSender ! WriteAck
       testProbes(nodeD).expectMsgType[Write]
       testProbes(nodeD).lastSender ! WriteAck
-      testProbes(nodeB).expectNoMsg(100.millis)
-      testProbes(nodeC).expectNoMsg(100.millis)
+      testProbes(nodeB).expectNoMessage(100.millis)
+      testProbes(nodeC).expectNoMessage(100.millis)
 
       expectMsg(UpdateSuccess(WriteAggregatorSpec.KeyB, None))
       watch(aggr)
@@ -275,7 +275,7 @@ class WriteAggregatorSpec extends AkkaSpec(s"""
       probe.lastSender ! WriteAck
       probe.expectMsgType[Write]
       probe.lastSender ! WriteAck
-      expectNoMsg(200.millis)
+      expectNoMessage(200.millis)
 
       // the local write
       aggr ! UpdateSuccess(WriteAggregatorSpec.KeyA, None)

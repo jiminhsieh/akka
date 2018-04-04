@@ -73,7 +73,7 @@ class StreamTestKitDocSpec extends AkkaSpec {
     val cancellable = sourceUnderTest.to(Sink.actorRef(probe.ref, "completed")).run()
 
     probe.expectMsg(1.second, Tick)
-    probe.expectNoMsg(100.millis)
+    probe.expectNoMessage(100.millis)
     probe.expectMsg(3.seconds, Tick)
     cancellable.cancel()
     probe.expectMsg(3.seconds, "completed")

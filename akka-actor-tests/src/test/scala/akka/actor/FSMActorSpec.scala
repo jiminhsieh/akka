@@ -288,7 +288,7 @@ class FSMActorSpec extends AkkaSpec(Map("akka.actor.debug.fsm" → true)) with I
               case Logging.Debug(`name`, `fsmClass`, s: String) if s.startsWith("processing Event(stop,null) from Actor[") ⇒ true
             }
             expectMsgAllOf(1 second, Logging.Debug(name, fsmClass, "canceling timer 't'"), FSM.Normal)
-            expectNoMsg(1 second)
+            expectNoMessage(1 second)
             system.eventStream.unsubscribe(testActor)
           }
         }
@@ -365,7 +365,7 @@ class FSMActorSpec extends AkkaSpec(Map("akka.actor.debug.fsm" → true)) with I
 
         fsm ! OverrideTimeoutToInf
         p.expectMsg(OverrideTimeoutToInf)
-        p.expectNoMsg(1.seconds)
+        p.expectNoMessage(1.seconds)
       } finally {
         TestKit.shutdownActorSystem(sys)
       }

@@ -84,7 +84,7 @@ class ActorLookupSpec extends AkkaSpec with DefaultTimeout {
       expectTerminated(a1)
 
       // let it be completely removed from user guardian
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
 
       // not equal because it's terminated
       system.actorFor(a1.path.toString) should not be (a1)

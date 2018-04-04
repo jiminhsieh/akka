@@ -49,7 +49,7 @@ class FlowGroupBySpec extends StreamSpec {
 
     def request(demand: Int): Unit = subscription.request(demand)
     def expectNext(elem: Int): Unit = probe.expectNext(elem)
-    def expectNoMsg(max: FiniteDuration): Unit = probe.expectNoMsg(max)
+    def expectNoMessage(max: FiniteDuration): Unit = probe.expectNoMessage(max)
     def expectComplete(): Unit = probe.expectComplete()
     def expectError(e: Throwable) = probe.expectError(e)
     def cancel(): Unit = subscription.cancel()
@@ -87,16 +87,16 @@ class FlowGroupBySpec extends StreamSpec {
     "work in the happy case" in assertAllStagesStopped {
       new SubstreamsSupport(groupCount = 2) {
         val s1 = StreamPuppet(getSubFlow(1).runWith(Sink.asPublisher(false)))
-        masterSubscriber.expectNoMsg(100.millis)
+        masterSubscriber.expectNoMessage(100.millis)
 
-        s1.expectNoMsg(100.millis)
+        s1.expectNoMessage(100.millis)
         s1.request(1)
         s1.expectNext(1)
-        s1.expectNoMsg(100.millis)
+        s1.expectNoMessage(100.millis)
 
         val s2 = StreamPuppet(getSubFlow(0).runWith(Sink.asPublisher(false)))
 
-        s2.expectNoMsg(100.millis)
+        s2.expectNoMessage(100.millis)
         s2.request(2)
         s2.expectNext(2)
 
@@ -104,7 +104,7 @@ class FlowGroupBySpec extends StreamSpec {
         s1.request(1)
         s2.expectNext(4)
 
-        s2.expectNoMsg(100.millis)
+        s2.expectNoMessage(100.millis)
 
         s1.expectNext(3)
 
@@ -153,7 +153,7 @@ class FlowGroupBySpec extends StreamSpec {
         substream.request(2)
         substream.expectNext(2)
         substream.expectNext(4)
-        substream.expectNoMsg(100.millis)
+        substream.expectNoMessage(100.millis)
 
         substream.request(2)
         substream.expectNext(6)
@@ -396,9 +396,9 @@ class FlowGroupBySpec extends StreamSpec {
 
       // Both will attempt to pull upstream
       substream.request(1)
-      substream.expectNoMsg(100.millis)
+      substream.expectNoMessage(100.millis)
       downstreamMaster.request(1)
-      downstreamMaster.expectNoMsg(100.millis)
+      downstreamMaster.expectNoMessage(100.millis)
 
       // Cleanup, not part of the actual test
       substream.cancel()

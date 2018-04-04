@@ -567,7 +567,7 @@ class ReplicatorSpec extends MultiNodeSpec(ReplicatorSpec) with STMultiNodeSpec 
       replicator ! Update(KeyI, GSet.empty[String], writeTwo)(_ + "a")
     }
 
-    changedProbe.expectNoMsg(1.second)
+    changedProbe.expectNoMessage(1.second)
 
     enterBarrierAfterTestStep()
   }

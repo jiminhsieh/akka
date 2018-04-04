@@ -54,7 +54,7 @@ class FlowZipWithSpec extends BaseTwoStreamsSetup {
       probe.expectError() match {
         case a: java.lang.ArithmeticException ⇒ a.getMessage should be("/ by zero")
       }
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
     }
 
     commonTests()

@@ -91,7 +91,7 @@ class SendQueueSpec extends AkkaSpec("akka.actor.serialize-messages = off") with
         .toMat(TestSink.probe)(Keep.both).run()
 
       downstream.request(10)
-      downstream.expectNoMsg(200.millis)
+      downstream.expectNoMessage(200.millis)
       sendQueue.inject(queue)
       downstream.expectNext("a")
       downstream.expectNext("b")

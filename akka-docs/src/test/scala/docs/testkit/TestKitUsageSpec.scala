@@ -71,7 +71,7 @@ class TestKitUsageSpec
         filterRef ! "test"
         expectMsg("test")
         filterRef ! 1
-        expectNoMsg
+        expectNoMessage
         filterRef ! "some"
         filterRef ! "more"
         filterRef ! 1
@@ -97,7 +97,7 @@ class TestKitUsageSpec
         ignoreMsg {
           case msg: String ⇒ msg == "1"
         }
-        expectNoMsg
+        expectNoMessage
         ignoreNoMsg
       }
     }

@@ -84,7 +84,7 @@ class InboundHandshakeSpec extends AkkaSpec with ImplicitSender {
       downstream.request(10)
       // no HandshakeReq
       upstream.sendNext("msg17")
-      downstream.expectNoMsg(200.millis) // messages from unknown are dropped
+      downstream.expectNoMessage(200.millis) // messages from unknown are dropped
 
       // and accept messages after handshake
       upstream.sendNext(HandshakeReq(addressA, addressB.address))

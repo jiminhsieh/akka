@@ -421,7 +421,7 @@ class ClusterClientSpec extends MultiNodeSpec(ClusterClientSpec) with STMultiNod
         c ! ClusterClient.Send("/user/service2", "ping", localAffinity = true)
         // if we would use remote watch the failure detector would trigger and
         // connection quarantined
-        expectNoMsg(5 seconds)
+        expectNoMessage(5 seconds)
 
         testConductor.passThrough(client, receptionistRoleName, Direction.Both).await
 

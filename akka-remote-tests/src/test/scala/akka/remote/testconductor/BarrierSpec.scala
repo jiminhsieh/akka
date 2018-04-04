@@ -48,9 +48,9 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
       val b = getBarrier()
       b ! NodeInfo(A, AddressFromURIString("akka://sys"), system.deadLetters)
       b ! ClientDisconnected(B)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       b ! ClientDisconnected(A)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "fail entering barrier when nobody registered" taggedAs TimingTest in {
@@ -106,7 +106,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
         b.expectMsg(ToClient(BarrierResult("bar4", true)))
       }
       barrier ! ClientDisconnected(C)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
     "leave barrier when last “arrived” is removed" taggedAs TimingTest in {
@@ -225,7 +225,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
     }
 
     "finally have no failure messages left" taggedAs TimingTest in {
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
   }
@@ -250,9 +250,9 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
         b ! NodeInfo(A, AddressFromURIString("akka://sys"), testActor)
         expectMsg(ToClient(Done))
         b ! ClientDisconnected(B)
-        expectNoMsg(1 second)
+        expectNoMessage(1 second)
         b ! ClientDisconnected(A)
-        expectNoMsg(1 second)
+        expectNoMessage(1 second)
       }
     }
 
@@ -320,7 +320,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
           b.expectMsg(ToClient(BarrierResult("bar13", true)))
         }
         barrier ! ClientDisconnected(C)
-        expectNoMsg(1 second)
+        expectNoMessage(1 second)
       }
     }
 
@@ -456,7 +456,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
         EventFilter[FailedBarrier](occurrences = 1) intercept {
           b.send(barrier, FailBarrier("bar20"))
           a.expectMsg(ToClient(BarrierResult("bar20", false)))
-          b.expectNoMsg(1 second)
+          b.expectNoMessage(1 second)
         }
         a.send(barrier, EnterBarrier("bar21", None))
         b.send(barrier, EnterBarrier("bar21", None))
@@ -514,7 +514,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
     }
 
     "finally have no failure messages left" taggedAs TimingTest in {
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
     }
 
   }
@@ -553,7 +553,7 @@ class BarrierSpec extends AkkaSpec(BarrierSpec.config) with ImplicitSender {
   }
 
   private def noMsg(probes: TestProbe*) {
-    expectNoMsg(1 second)
+    expectNoMessage(1 second)
     probes foreach (_.msgAvailable should ===(false))
   }
 

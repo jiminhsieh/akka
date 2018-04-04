@@ -53,5 +53,5 @@ abstract class TestInbox[T] {
 
   def hasMessages: Boolean
 
-  // TODO expectNoMsg etc
+  // TODO expectNoMessage etc
 }

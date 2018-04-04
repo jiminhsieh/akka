@@ -66,12 +66,12 @@ class FlowMapAsyncUnorderedSpec extends StreamSpec {
             n
           }).to(Sink.fromSubscriber(c)).run()
       val sub = c.expectSubscription()
-      c.expectNoMsg(200.millis)
-      probe.expectNoMsg(Duration.Zero)
+      c.expectNoMessage(200.millis)
+      probe.expectNoMessage(Duration.Zero)
       sub.request(1)
       var got = Set(c.expectNext())
       probe.expectMsgAllOf(1, 2, 3, 4, 5)
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
       sub.request(25)
       probe.expectMsgAllOf(6 to 20: _*)
       c.within(3.seconds) {

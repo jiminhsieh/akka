@@ -42,7 +42,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
       val ri = remoteInstruments(testInstrument(1, "!"))
       serializeDeserialize(ri, ri, p.ref, "foo")
       p.expectMsgAllOf("foo-1-!")
-      p.expectNoMsg(100.millis)
+      p.expectNoMessage(100.millis)
     }
 
     "serialize and deserialize multiple remote instruments in the correct order" in {
@@ -50,7 +50,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
       val ri = remoteInstruments(testInstrument(1, "!"), testInstrument(31, "???"), testInstrument(10, ".."))
       serializeDeserialize(ri, ri, p.ref, "bar")
       p.expectMsgAllOf("bar-1-!", "bar-10-..", "bar-31-???")
-      p.expectNoMsg(100.millis)
+      p.expectNoMessage(100.millis)
     }
 
     "skip exitsing remote instruments not in the message" in {
@@ -62,7 +62,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
           val riD = remoteInstruments(instruments: _*)
           serializeDeserialize(riS, riD, p.ref, "baz")
           p.expectMsgAllOf("baz-7-!", "baz-21-???")
-          p.expectNoMsg(100.millis)
+          p.expectNoMessage(100.millis)
         }
     }
 
@@ -75,7 +75,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
           val riD = remoteInstruments(instruments(0), instruments(2))
           serializeDeserialize(riS, riD, p.ref, "buz")
           p.expectMsgAllOf("buz-6-!", "buz-19-???")
-          p.expectNoMsg(100.millis)
+          p.expectNoMessage(100.millis)
         }
     }
 
@@ -87,7 +87,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
           val riS = remoteInstruments(instruments: _*)
           val riD = remoteInstruments()
           serializeDeserialize(riS, riD, p.ref, "boz")
-          p.expectNoMsg(100.millis)
+          p.expectNoMessage(100.millis)
         }
     }
 
@@ -101,7 +101,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
           val ri = remoteInstruments(instruments: _*)
           serializeDeserialize(ri, ri, p.ref, "woot")
           p.expectMsgAllOf("woot-10-..", "woot-21-???")
-          p.expectNoMsg(100.millis)
+          p.expectNoMessage(100.millis)
         }
     }
 
@@ -116,7 +116,7 @@ class RemoteInstrumentsSerializationSpec extends AkkaSpec("akka.loglevel = DEBUG
           val ri = remoteInstruments(instruments: _*)
           serializeDeserialize(ri, ri, p.ref, "waat")
           p.expectMsgAllOf("waat-10-..")
-          p.expectNoMsg(100.millis)
+          p.expectNoMessage(100.millis)
         }
     }
   }

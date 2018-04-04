@@ -152,9 +152,9 @@ abstract class RemoteReDeploymentMultiJvmSpec(multiNodeConfig: RemoteReDeploymen
           within(sleepAfterKill) {
             // The quarantine of node 2, where the Parent lives, should cause the Hello child to be stopped:
             expectMsg("PostStop")
-            expectNoMsg()
+            expectNoMessage()
           }
-        else expectNoMsg(sleepAfterKill)
+        else expectNoMessage(sleepAfterKill)
         awaitAssert(node(second), 10.seconds, 100.millis)
       }
 
@@ -163,7 +163,7 @@ abstract class RemoteReDeploymentMultiJvmSpec(multiNodeConfig: RemoteReDeploymen
       // Start the second system again
       runOn(second) {
         Await.ready(system.whenTerminated, 30.seconds)
-        expectNoMsg(sleepAfterKill)
+        expectNoMessage(sleepAfterKill)
         sys = startNewSystem()
       }
 
@@ -208,7 +208,7 @@ abstract class RemoteReDeploymentMultiJvmSpec(multiNodeConfig: RemoteReDeploymen
       enterBarrier("the-end")
 
       // After this we expect no further messages
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
 
       // Until we clean up after ourselves
       enterBarrier("stopping")

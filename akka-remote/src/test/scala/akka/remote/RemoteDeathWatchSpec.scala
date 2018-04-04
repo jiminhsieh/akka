@@ -64,11 +64,11 @@ akka {
 
     expectMsg(20.seconds, ref)
     // we don't expect real quarantine when the UID is unknown, i.e. QuarantinedEvent is not published
-    probe.expectNoMsg(3.seconds)
+    probe.expectNoMessage(3.seconds)
     // The following verifies ticket #3870, i.e. make sure that re-delivery of Watch message is stopped.
     // It was observed as periodic logging of "address is now gated" when the gate was lifted.
     system.eventStream.subscribe(probe.ref, classOf[Warning])
-    probe.expectNoMsg(rarp.remoteSettings.RetryGateClosedFor * 2)
+    probe.expectNoMessage(rarp.remoteSettings.RetryGateClosedFor * 2)
   }
 
   "receive Terminated when watched node is unknown host" in {
@@ -101,9 +101,9 @@ akka {
     probe.watch(extinctRef)
     probe.unwatch(extinctRef)
 
-    probe.expectNoMsg(5.seconds)
+    probe.expectNoMessage(5.seconds)
     system.eventStream.subscribe(probe.ref, classOf[Warning])
-    probe.expectNoMsg(RARP(system).provider.remoteSettings.RetryGateClosedFor * 2)
+    probe.expectNoMessage(RARP(system).provider.remoteSettings.RetryGateClosedFor * 2)
   }
 
 }

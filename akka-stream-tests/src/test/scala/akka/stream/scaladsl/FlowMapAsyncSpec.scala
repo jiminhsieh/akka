@@ -36,7 +36,7 @@ class FlowMapAsyncSpec extends StreamSpec {
       sub.request(2)
       c.expectNext(1)
       c.expectNext(2)
-      c.expectNoMsg(200.millis)
+      c.expectNoMessage(200.millis)
       sub.request(2)
       c.expectNext(3)
       c.expectComplete()
@@ -66,19 +66,19 @@ class FlowMapAsyncSpec extends StreamSpec {
         n
       }).to(Sink.fromSubscriber(c)).run()
       val sub = c.expectSubscription()
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
       sub.request(1)
       probe.receiveN(9).toSet should be((1 to 9).toSet)
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
       sub.request(2)
       probe.receiveN(2).toSet should be(Set(10, 11))
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
       sub.request(10)
       probe.receiveN(9).toSet should be((12 to 20).toSet)
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
 
       for (n ← 1 to 13) c.expectNext(n)
-      c.expectNoMsg(200.millis)
+      c.expectNoMessage(200.millis)
     }
 
     "signal future already failed" in assertAllStagesStopped {

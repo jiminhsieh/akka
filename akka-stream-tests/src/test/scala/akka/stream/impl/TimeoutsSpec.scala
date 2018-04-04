@@ -46,7 +46,7 @@ class TimeoutsSpec extends StreamSpec {
         .runWith(Sink.fromSubscriber(downstreamProbe))
 
       downstreamProbe.expectSubscription()
-      downstreamProbe.expectNoMsg(500.millis)
+      downstreamProbe.expectNoMessage(500.millis)
 
       val ex = downstreamProbe.expectError()
       ex.getMessage should ===("The first element has not yet passed through in 1 second.")
@@ -81,11 +81,11 @@ class TimeoutsSpec extends StreamSpec {
 
       upstreamProbe.sendNext(1)
       downstreamProbe.requestNext(1)
-      downstreamProbe.expectNoMsg(500.millis) // No timeout yet
+      downstreamProbe.expectNoMessage(500.millis) // No timeout yet
 
       upstreamProbe.sendNext(2)
       downstreamProbe.requestNext(2)
-      downstreamProbe.expectNoMsg(500.millis) // No timeout yet
+      downstreamProbe.expectNoMessage(500.millis) // No timeout yet
 
       val ex = downstreamProbe.expectError()
       ex.getMessage should ===("The stream has not been completed in 2 seconds.")
@@ -123,7 +123,7 @@ class TimeoutsSpec extends StreamSpec {
       for (_ ← 1 to 4) {
         upstreamProbe.sendNext(1)
         downstreamProbe.requestNext(1)
-        downstreamProbe.expectNoMsg(500.millis) // No timeout yet
+        downstreamProbe.expectNoMessage(500.millis) // No timeout yet
       }
 
       val ex = downstreamProbe.expectError()
@@ -147,7 +147,7 @@ class TimeoutsSpec extends StreamSpec {
 
       for (i ← 1 to 3) {
         subscriber.requestNext(i)
-        subscriber.expectNoMsg(250.millis)
+        subscriber.expectNoMessage(250.millis)
       }
 
       subscriber.requestNext(4)
@@ -164,11 +164,11 @@ class TimeoutsSpec extends StreamSpec {
 
       subscriber.request(2)
 
-      subscriber.expectNoMsg(1.second)
+      subscriber.expectNoMessage(1.second)
       publisher.sendNext("Quick Msg")
       subscriber.expectNext("Quick Msg")
 
-      subscriber.expectNoMsg(3.seconds)
+      subscriber.expectNoMessage(3.seconds)
       publisher.sendNext("Slow Msg")
       subscriber.expectNext("Slow Msg")
 
@@ -185,7 +185,7 @@ class TimeoutsSpec extends StreamSpec {
         .runWith(Sink.fromSubscriber(subscriber))
 
       subscriber.request(16)
-      subscriber.expectNoMsg(2.second)
+      subscriber.expectNoMessage(2.second)
 
       publisher.sendComplete()
       subscriber.expectComplete()
@@ -235,7 +235,7 @@ class TimeoutsSpec extends StreamSpec {
       publisher.sendNext(1)
       subscriber.expectNext(1)
 
-      subscriber.expectNoMsg(2.second)
+      subscriber.expectNoMessage(2.second)
 
       publisher.sendComplete()
       subscriber.expectComplete()
@@ -316,7 +316,7 @@ class TimeoutsSpec extends StreamSpec {
       downWrite.sendNext(2)
       upRead.expectNext(2)
 
-      upRead.expectNoMsg(500.millis)
+      upRead.expectNoMessage(500.millis)
       val error1 = upRead.expectError()
       val error2 = downRead.expectError()
 

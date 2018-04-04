@@ -111,48 +111,48 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       monitorA ! Stats
       // (a1->b1), (a1->b2), (a2->b2)
       expectMsg(Stats.counts(watching = 3, watchingNodes = 1))
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA.tell(heartbeatRspB, monitorB)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
 
       monitorA ! UnwatchRemote(b1, a1)
       // still (a1->b2) and (a2->b2) left
       monitorA ! Stats
       expectMsg(Stats.counts(watching = 2, watchingNodes = 1))
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
 
       monitorA ! UnwatchRemote(b2, a2)
       // still (a1->b2) left
       monitorA ! Stats
       expectMsg(Stats.counts(watching = 1, watchingNodes = 1))
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
 
       monitorA ! UnwatchRemote(b2, a1)
       // all unwatched
       monitorA ! Stats
       expectMsg(Stats.empty)
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
       monitorA ! HeartbeatTick
-      expectNoMsg(100 millis)
+      expectNoMessage(100 millis)
 
       // make sure nothing floods over to next test
-      expectNoMsg(2 seconds)
+      expectNoMessage(2 seconds)
     }
 
     "generate AddressTerminated when missing heartbeats" taggedAs LongRunningTest in {
@@ -172,7 +172,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
@@ -189,7 +189,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       }
 
       // make sure nothing floods over to next test
-      expectNoMsg(2 seconds)
+      expectNoMessage(2 seconds)
     }
 
     "generate AddressTerminated when missing first heartbeat" taggedAs LongRunningTest in {
@@ -225,7 +225,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       }
 
       // make sure nothing floods over to next test
-      expectNoMsg(2 seconds)
+      expectNoMessage(2 seconds)
     }
 
     "generate AddressTerminated for new watch after broken connection that was re-established and broken again" taggedAs LongRunningTest in {
@@ -245,7 +245,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
@@ -267,7 +267,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
         monitorA ! Stats
         expectMsg(Stats.empty)
       }
-      expectNoMsg(2 seconds)
+      expectNoMessage(2 seconds)
 
       // assume that connection comes up again, or remote system is restarted
       val c = createRemoteActor(Props[MyActor], "c6")
@@ -277,22 +277,22 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA ! ReapUnreachableTick
-      p.expectNoMsg(1 second)
+      p.expectNoMessage(1 second)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA.tell(heartbeatRspB, monitorB)
       monitorA ! HeartbeatTick
       expectMsg(ArteryHeartbeat)
       monitorA ! ReapUnreachableTick
-      p.expectNoMsg(1 second)
-      q.expectNoMsg(1 second)
+      p.expectNoMessage(1 second)
+      q.expectNoMessage(1 second)
 
       // then stop heartbeating again, should generate new AddressTerminated
       within(10 seconds) {
@@ -307,7 +307,7 @@ class RemoteWatcherSpec extends ArteryMultiNodeSpec(ArterySpecSupport.defaultCon
       }
 
       // make sure nothing floods over to next test
-      expectNoMsg(2 seconds)
+      expectNoMessage(2 seconds)
     }
 
   }

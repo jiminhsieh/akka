@@ -84,7 +84,7 @@ class UnfoldResourceAsyncSourceSpec extends StreamSpec(UnboundedMailboxConfig) {
 
       probe.request(1)
       resource.created.futureValue
-      probe.expectNoMsg(200.millis)
+      probe.expectNoMessage(200.millis)
       createPromise.success(Done)
 
       values.foreach { n ⇒

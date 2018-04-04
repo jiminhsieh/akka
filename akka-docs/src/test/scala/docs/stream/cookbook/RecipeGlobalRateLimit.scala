@@ -116,11 +116,11 @@ class RecipeGlobalRateLimit extends RecipeSpec {
 
       probe.expectNext() should startWith("E")
       probe.expectNext() should startWith("E")
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
 
       limiter ! Limiter.ReplenishTokens
       probe.expectNext() should startWith("E")
-      probe.expectNoMsg(500.millis)
+      probe.expectNoMessage(500.millis)
 
       var resultSet = Set.empty[String]
       for (_ ← 1 to 100) {

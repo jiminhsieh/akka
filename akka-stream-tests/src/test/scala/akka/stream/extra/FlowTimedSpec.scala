@@ -65,7 +65,7 @@ class FlowTimedSpec extends StreamSpec with ScriptedTest {
       })
 
       testRuns foreach { _ ⇒ testActor.expectMsgType[Duration] }
-      testActor.expectNoMsg(1.second)
+      testActor.expectNoMessage(1.second)
     }
 
     "have a Java API" in pending

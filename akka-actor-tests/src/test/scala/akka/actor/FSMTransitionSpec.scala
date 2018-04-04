@@ -74,7 +74,7 @@ class FSMTransitionSpec extends AkkaSpec with ImplicitSender {
       val fsm = system.actorOf(Props(new SendAnyTransitionFSM(testActor)))
       expectMsg(0 → 0) // caused by initialize(), OK.
       fsm ! "stay" // no transition event
-      expectNoMsg(500.millis)
+      expectNoMessage(500.millis)
       fsm ! "goto" // goto(current state)
       expectMsg(0 → 0)
     }
@@ -102,7 +102,7 @@ class FSMTransitionSpec extends AkkaSpec with ImplicitSender {
         expectMsg(FSM.CurrentState(fsm, 0))
         akka.pattern.gracefulStop(forward, 5 seconds)
         fsm ! "tick"
-        expectNoMsg()
+        expectNoMessage()
       }
     }
   }
@@ -142,7 +142,7 @@ class FSMTransitionSpec extends AkkaSpec with ImplicitSender {
         fsm ! FSM.SubscribeTransitionCallBack(forward)
         expectMsg(FSM.CurrentState(fsm, 0))
         fsm ! "stay"
-        expectNoMsg()
+        expectNoMessage()
       }
     }
 

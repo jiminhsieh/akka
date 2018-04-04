@@ -127,7 +127,7 @@ class SnapshotFailureRobustnessSpec extends PersistenceSpec(PersistenceSpec.conf
         }
         expectMsg("kablama-2")
         expectMsg(RecoveryCompleted)
-        expectNoMsg(1 second)
+        expectNoMessage(1 second)
       } finally {
         system.eventStream.unsubscribe(testActor, classOf[Logging.Error])
         system.eventStream.publish(TestEvent.UnMute(

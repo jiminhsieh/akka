@@ -100,7 +100,7 @@ class GraphStageTimersSpec extends StreamSpec {
           driver ! TestSingleTimer
           expectMsg(Tick(1))
         }
-        expectNoMsg(1.second)
+        expectNoMessage(1.second)
       }
 
       driver.stopStage()
@@ -117,7 +117,7 @@ class GraphStageTimersSpec extends StreamSpec {
         within(1.second) {
           expectMsg(Tick(2))
         }
-        expectNoMsg(1.second)
+        expectNoMessage(1.second)
       }
 
       driver.stopStage()
@@ -133,7 +133,7 @@ class GraphStageTimersSpec extends StreamSpec {
       within(300.millis, 1.second) {
         expectMsg(Tick(1))
       }
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
 
       driver.stopStage()
     }
@@ -146,7 +146,7 @@ class GraphStageTimersSpec extends StreamSpec {
         case t: Tick ⇒ t
       }
       seq should have length 5
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
 
       driver.stopStage()
     }
@@ -187,7 +187,7 @@ class GraphStageTimersSpec extends StreamSpec {
       downstream.expectNext(2)
       downstream.expectNext(3)
 
-      downstream.expectNoMsg(1.second)
+      downstream.expectNoMessage(1.second)
 
       upstream.sendComplete()
       downstream.expectComplete()

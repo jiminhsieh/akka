@@ -27,7 +27,7 @@ class ActorRefSourceSpec extends StreamSpec {
       ref ! 2
       s.expectNext(2)
       ref ! 3
-      s.expectNoMsg(500.millis)
+      s.expectNoMessage(500.millis)
     }
 
     "buffer when needed" in {

@@ -37,13 +37,13 @@ class FlowIterableSpec extends AbstractFlowIteratorSpec {
     val sub = c.expectSubscription()
     sub.request(1)
     c.expectNext(1)
-    c.expectNoMsg(100.millis)
+    c.expectNoMessage(100.millis)
     EventFilter[IllegalStateException](message = "not two", occurrences = 1).intercept {
       sub.request(2)
     }
     c.expectError().getMessage should be("not two")
     sub.request(2)
-    c.expectNoMsg(100.millis)
+    c.expectNoMessage(100.millis)
   }
 
   "produce onError when Source construction throws" in {
@@ -54,7 +54,7 @@ class FlowIterableSpec extends AbstractFlowIteratorSpec {
     val c = TestSubscriber.manualProbe[Int]()
     p.subscribe(c)
     c.expectSubscriptionAndError().getMessage should be("no good iterator")
-    c.expectNoMsg(100.millis)
+    c.expectNoMessage(100.millis)
   }
 
   "produce onError when hasNext throws" in {
@@ -68,7 +68,7 @@ class FlowIterableSpec extends AbstractFlowIteratorSpec {
     val c = TestSubscriber.manualProbe[Int]()
     p.subscribe(c)
     c.expectSubscriptionAndError().getMessage should be("no next")
-    c.expectNoMsg(100.millis)
+    c.expectNoMessage(100.millis)
   }
 }
 
@@ -92,7 +92,7 @@ abstract class AbstractFlowIteratorSpec extends StreamSpec {
       val sub = c.expectSubscription()
       sub.request(1)
       c.expectNext(1)
-      c.expectNoMsg(100.millis)
+      c.expectNoMessage(100.millis)
       sub.request(3)
       c.expectNext(2)
       c.expectNext(3)
@@ -104,7 +104,7 @@ abstract class AbstractFlowIteratorSpec extends StreamSpec {
       val c = TestSubscriber.manualProbe[Int]()
       p.subscribe(c)
       c.expectSubscriptionAndComplete()
-      c.expectNoMsg(100.millis)
+      c.expectNoMessage(100.millis)
     }
 
     "produce elements with multiple subscribers" in assertAllStagesStopped {
@@ -120,8 +120,8 @@ abstract class AbstractFlowIteratorSpec extends StreamSpec {
       c1.expectNext(1)
       c2.expectNext(1)
       c2.expectNext(2)
-      c1.expectNoMsg(100.millis)
-      c2.expectNoMsg(100.millis)
+      c1.expectNoMessage(100.millis)
+      c2.expectNoMessage(100.millis)
       sub1.request(2)
       sub2.request(2)
       c1.expectNext(2)
@@ -140,7 +140,7 @@ abstract class AbstractFlowIteratorSpec extends StreamSpec {
       val sub1 = c1.expectSubscription()
       sub1.request(1)
       c1.expectNext(1)
-      c1.expectNoMsg(100.millis)
+      c1.expectNoMessage(100.millis)
       p.subscribe(c2)
       val sub2 = c2.expectSubscription()
       sub2.request(3)
@@ -186,7 +186,7 @@ abstract class AbstractFlowIteratorSpec extends StreamSpec {
       c.expectNext(1)
       sub.cancel()
       sub.request(2)
-      c.expectNoMsg(100.millis)
+      c.expectNoMessage(100.millis)
     }
 
   }

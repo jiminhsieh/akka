@@ -198,7 +198,7 @@ abstract class PersistentFSMSpec(config: Config) extends PersistenceSpec(config)
       expectMsg(CurrentState(fsmRef, LookingAround, None))
       expectMsg(Transition(fsmRef, LookingAround, Shopping, Some(1 second)))
 
-      expectNoMsg(0.6 seconds) // arbitrarily chosen delay, less than the timeout, before stopping the FSM
+      expectNoMessage(0.6 seconds) // arbitrarily chosen delay, less than the timeout, before stopping the FSM
       fsmRef ! PoisonPill
       expectTerminated(fsmRef)
 
@@ -215,7 +215,7 @@ abstract class PersistentFSMSpec(config: Config) extends PersistenceSpec(config)
         expectMsg(Transition(recoveredFsmRef, Shopping, Inactive, Some(2 seconds)))
       }
 
-      expectNoMsg(0.6 seconds) // arbitrarily chosen delay, less than the timeout, before stopping the FSM
+      expectNoMessage(0.6 seconds) // arbitrarily chosen delay, less than the timeout, before stopping the FSM
       recoveredFsmRef ! PoisonPill
       expectTerminated(recoveredFsmRef)
 
@@ -238,7 +238,7 @@ abstract class PersistentFSMSpec(config: Config) extends PersistenceSpec(config)
       probe.expectMsg(3.seconds, "LookingAround -> LookingAround")
 
       fsmRef ! "stay" // causes stay()
-      probe.expectNoMsg(3.seconds)
+      probe.expectNoMessage(3.seconds)
     }
 
     "not persist state change event when staying in the same state" in {
@@ -318,7 +318,7 @@ abstract class PersistentFSMSpec(config: Config) extends PersistenceSpec(config)
       expectMsg(NonEmptyShoppingCart(List(shirt, shoes, coat)))
 
       expectMsg(NonEmptyShoppingCart(List(shirt, shoes, coat)))
-      expectNoMsg(1 second)
+      expectNoMessage(1 second)
 
       fsmRef ! PoisonPill
       expectTerminated(fsmRef)
@@ -356,7 +356,7 @@ abstract class PersistentFSMSpec(config: Config) extends PersistenceSpec(config)
 
       fsm ! TimeoutFSM.OverrideTimeoutToInf
       p.expectMsg(TimeoutFSM.OverrideTimeoutToInf)
-      p.expectNoMsg(1.seconds)
+      p.expectNoMessage(1.seconds)
 
     }
 

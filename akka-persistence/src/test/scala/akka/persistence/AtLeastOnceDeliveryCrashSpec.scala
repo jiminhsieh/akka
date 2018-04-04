@@ -74,9 +74,9 @@ class AtLeastOnceDeliveryCrashSpec extends AkkaSpec(PersistenceSpec.config("inme
       system.stop(superVisor)
       deathProbe.expectTerminated(superVisor)
 
-      testProbe.expectNoMsg(250.millis)
+      testProbe.expectNoMessage(250.millis)
       createCrashActorUnderSupervisor()
-      testProbe.expectNoMsg(1.second)
+      testProbe.expectNoMessage(1.second)
     }
   }
 }

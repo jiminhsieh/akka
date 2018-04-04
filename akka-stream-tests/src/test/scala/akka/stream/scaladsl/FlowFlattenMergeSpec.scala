@@ -177,7 +177,7 @@ class FlowFlattenMergeSpec extends StreamSpec {
         .runWith(TestSink.probe)
       p.within(1.second) {
         p.ensureSubscription()
-        p.expectNoMsg()
+        p.expectNoMessage()
       }
       val elems = p.within(1.second)((1 to 1000).map(i ⇒ p.requestNext()).toSet)
       p.expectComplete()

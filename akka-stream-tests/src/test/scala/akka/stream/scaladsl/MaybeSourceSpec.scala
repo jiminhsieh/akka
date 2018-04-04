@@ -28,7 +28,7 @@ class MaybeSourceSpec extends StreamSpec with DefaultTimeout {
       val subs = c.expectSubscription()
 
       subs.request(1000)
-      c.expectNoMsg(300.millis)
+      c.expectNoMessage(300.millis)
 
       subs.cancel()
       f.future.futureValue shouldEqual None

@@ -169,7 +169,7 @@ abstract class JournalSpec(config: Config) extends PluginSpec(config) with MayVe
       journal ! ReplayMessages(1, Long.MaxValue, Long.MaxValue, pid, receiverProbe.ref)
       List(4, 5) foreach { i ⇒ receiverProbe.expectMsg(replayedMessage(i)) }
 
-      receiverProbe2.expectNoMsg(200.millis)
+      receiverProbe2.expectNoMessage(200.millis)
     }
 
     "not reset highestSequenceNr after message deletion" in {

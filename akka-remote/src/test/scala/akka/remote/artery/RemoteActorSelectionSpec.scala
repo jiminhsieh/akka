@@ -151,7 +151,7 @@ class RemoteActorSelectionSpec extends ArteryMultiNodeSpec with ImplicitSender {
       // msg to old ActorRef (different uid) should not get through
       child2.path.uid should not be (remoteChild.path.uid)
       remoteChild ! 56
-      expectNoMsg(1.second)
+      expectNoMessage(1.second)
       localSystem.actorSelection(localSystem / "looker2" / "child") ! 57
       expectMsg(57)
     }

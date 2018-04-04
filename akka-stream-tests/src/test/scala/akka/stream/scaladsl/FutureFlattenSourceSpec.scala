@@ -43,9 +43,9 @@ class FutureFlattenSourceSpec extends StreamSpec {
         .subscribe(c)
       val sub = c.expectSubscription()
       import scala.concurrent.duration._
-      c.expectNoMsg(100.millis)
+      c.expectNoMessage(100.millis)
       sub.request(3)
-      c.expectNoMsg(100.millis)
+      c.expectNoMessage(100.millis)
       sourcePromise.success(underlying)
       c.expectNext(1)
       c.expectNext(2)

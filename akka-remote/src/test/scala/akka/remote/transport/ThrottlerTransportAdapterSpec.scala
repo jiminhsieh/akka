@@ -111,9 +111,9 @@ class ThrottlerTransportAdapterSpec extends AkkaSpec(configA) with ImplicitSende
       throttle(Direction.Both, Blackhole) should ===(true)
 
       here ! Lost("Blackhole 2")
-      expectNoMsg(1.seconds)
+      expectNoMessage(1.seconds)
       disassociate() should ===(true)
-      expectNoMsg(1.seconds)
+      expectNoMessage(1.seconds)
 
       throttle(Direction.Both, Unthrottled) should ===(true)
 

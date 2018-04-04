@@ -39,7 +39,7 @@ class RemoteMessageSerializationSpec extends ArteryMultiNodeSpec("""
       object Unserializable
       EventFilter[NotSerializableException](pattern = ".*No configured serialization.*", occurrences = 1).intercept {
         verifySend(Unserializable) {
-          expectNoMsg(1.second) // No AssocitionErrorEvent should be published
+          expectNoMessage(1.second) // No AssocitionErrorEvent should be published
         }
       }
     }
@@ -56,7 +56,7 @@ class RemoteMessageSerializationSpec extends ArteryMultiNodeSpec("""
       val oversized = byteStringOfSize(maxPayloadBytes + 1)
       EventFilter[OversizedPayloadException](start = "Failed to serialize oversized message", occurrences = 1).intercept {
         verifySend(oversized) {
-          expectNoMsg(1.second) // No AssocitionErrorEvent should be published
+          expectNoMessage(1.second) // No AssocitionErrorEvent should be published
         }
       }
     }
@@ -66,7 +66,7 @@ class RemoteMessageSerializationSpec extends ArteryMultiNodeSpec("""
       // Receiver should reply with a message of size maxPayload + 1, which will be dropped and an error logged
       EventFilter[OversizedPayloadException](pattern = ".*Discarding oversized payload received.*", occurrences = 1).intercept {
         verifySend(maxPayloadBytes + 1) {
-          expectNoMsg(1.second) // No AssocitionErrorEvent should be published
+          expectNoMessage(1.second) // No AssocitionErrorEvent should be published
         }
       }
     }
@@ -102,7 +102,7 @@ class RemoteMessageSerializationSpec extends ArteryMultiNodeSpec("""
     try {
       bigBounceHere ! msg
       afterSend
-      expectNoMsg(500.millis)
+      expectNoMessage(500.millis)
     } finally {
       localSystem.eventStream.unsubscribe(eventForwarder, classOf[AssociationErrorEvent])
       localSystem.eventStream.unsubscribe(eventForwarder, classOf[DisassociatedEvent])
