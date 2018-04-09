@@ -50,7 +50,8 @@ lazy val root = Project(
  .settings(rootSettings: _*)
  .settings(unidocRootIgnoreProjects := Seq(remoteTests, benchJmh, protobuf, akkaScalaNightly, docs))
  .settings(
-   unmanagedSources in(Compile, headerCreate) := (baseDirectory.value / "project").**("*.scala").get
+   unmanagedSources in(Compile, headerCreate) := (baseDirectory.value / "project").**("*.scala").get,
+   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports")
  )
 
 lazy val actor = akkaModule("akka-actor")
