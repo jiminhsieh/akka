@@ -10,7 +10,7 @@ import akka.stream.impl.ReactiveStreamsCompliance
 
 /** INTERNAL API */
 @InternalApi
-private[akka] sealed trait StreamRefsProtocol
+private[akka] sealed trait StreamRefsProtocol extends Serializable
 
 /** INTERNAL API */
 @InternalApi
