@@ -46,9 +46,7 @@ object ActorSink {
    * When the stream is completed with failure - result of `onFailureMessage(throwable)`
    * function will be sent to the destination actor.
    */
-  def actorRefWithBackpressure[T, M, A](
-      ref: ActorRef[M],
-      messageAdapter: (ActorRef[A], T) => M,
+  def actorRefWithBackpressure[T, M, A](ref: ActorRef[M], messageAdapter: (ActorRef[A], T) => M,
       onInitMessage: ActorRef[A] => M,
       ackMessage: A,
       onCompleteMessage: M,
